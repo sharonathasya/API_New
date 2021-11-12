@@ -1,0 +1,299 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = "_LayoutAdmin";
+}
+
+@*<div class="text-center">
+        <h1 class="display-4">Welcome</h1>
+        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    </div>*@
+<div class="card">
+    <div class="card-header">
+        <h1 class="card-title">Employee</h1>
+        <div style="text-align: right">
+            <button type="button" id="btnAdd" title="Add" class="btn btn-info btn-sm " data-toggle="modal" data-target="#formModal">
+                <i class="fa fa-plus"></i> Add
+            </button>
+            <button type="button" id="btnExcel" title="Export Excel" class="btn fa fa-file-excel-o btn-success btn-sm " onclick="ExportExcel();">
+                Excel
+            </button>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <div class="table-responsive">
+            <div class="mt-2">
+                <table id="tableEmp" class="table table-hover">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">No</th>
+                            <th scope="col">NIK</th>
+                            <th scope="col">Nama</th>
+                            <th scope="col">Phone</th>
+                            <th scope="col">Salary</th>
+                            <th scope="col">Gender</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableEmployee">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Button trigger modal -->
+@*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#formModal">
+        Launch demo modal
+    </button>*@
+
+<!--Modal -->
+<div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" style="width:1250px;" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Form Register</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="RegistForm">
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="validationTooltip01">NIK</label>
+                            <input type="text" class="form-control is-invalid" id="inputNIK" name="NIK" placeholder="Input your NIK">
+                            <div class="invalid-tooltip">
+                                NIK is empty!
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="validationTooltip01">First Name</label>
+                            <input type="text" class="form-control" id="inputFirstName" name="FirstName" placeholder="First Name">
+                            <div class="invalid-tooltip">
+                                First Name is empty!
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="validationTooltip01">Last Name</label>
+                            <input type="text" class="form-control" id="inputLastName" name="LastName" placeholder="Last Name">
+                            <div class="invalid-tooltip">
+                                Last Name is empty!
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="validationTooltip01">Phone</label>
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">+62</div>
+                                <input type="text" class="form-control" id="inputPhone" name="Phone" placeholder="Phone">
+                                <div class="invalid-tooltip">
+                                    Phone is empty!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="validationTooltip01">Birth Date</label>
+                            <input type="date" class="form-control" id="inputBDate" name="BirthDate">
+                            <div class="invalid-tooltip">
+                                Birth Date is empty!
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="validationTooltip01">Salary</label>
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Rp.</div>
+                                <input type="text" class="form-control" id="inputSalary" name="Salary" placeholder="Salary">
+                                <div class="invalid-tooltip">
+                                    Salary is empty!
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="validationTooltip01">Gender</label>
+                            <select id="inputGender" class="form-control" name="Gender" required>
+                                <option value="">- Select -</option>
+                                <option value="0"> Male</option>
+                                <option value="1"> Female</option>
+                            </select>
+                            <div class="invalid-tooltip">
+                                Gender is empty!
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="validationTooltip01">Email</label>
+                            <input type="email" class="form-control" id="inputEmail" name="Email" placeholder="Email">
+                            <div class="invalid-tooltip">
+                                Email is empty!
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="validationTooltip01">Password</label>
+                            <input type="password" class="form-control" id="inputPassword" name="Password" placeholder="Password" required>
+                            <div class="invalid-tooltip">
+                                Password is empty!
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="validationTooltip01">Degree</label>
+                            <input type="text" class="form-control" id="inputDegree" name="Degree" placeholder="Degree">
+                            <div class="invalid-tooltip">
+                                Degree is empty!
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="validationTooltip01">GPA</label>
+                            <input type="text" class="form-control" id="inputGPA" name="GPA" placeholder="GPA">
+                            <div class="invalid-tooltip">
+                                GPA is empty!
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="validationTooltip01">University</label>
+                            <select id="inputUniv" class="form-control" name="University" required>
+                                <option value="">- Select -</option>
+                            </select>
+                            <div class="invalid-tooltip">
+                                University is empty!
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="validationTooltip01">Role</label>
+                            <select id="inputRole" class="form-control" name="Role" required>
+                                <option value="">- Select -</option>
+                            </select>
+                            <div class="invalid-tooltip">
+                                Role is empty!
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" id="btnSubmit" form="RegistForm" class="btn btn-primary">Register</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="formEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" style="width:1250px;" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Form Edit</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="EditForm">
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="validationTooltip01">NIK</label>
+                            <input type="text" id="editNIK" name="NIK" placeholder="Input your NIK" disabled>
+                            <div class="invalid-tooltip">
+                                NIK is empty!
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="validationTooltip01">First Name</label>
+                            <input type="text" class="form-control" id="editFirstName" name="FirstName" placeholder="First Name">
+                            <div class="invalid-tooltip">
+                                First Name is empty!
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="validationTooltip01">Last Name</label>
+                            <input type="text" class="form-control" id="editLastName" name="LastName" placeholder="Last Name">
+                            <div class="invalid-tooltip">
+                                Last Name is empty!
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="validationTooltip01">Phone</label>
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">+62</div>
+                                <input type="text" class="form-control" id="editPhone" name="Phone" placeholder="Phone">
+                                <div class="invalid-tooltip">
+                                    Phone is empty!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="validationTooltip01">Birth Date</label>
+                            <input type="date" class="form-control" id="editBDate" name="BirthDate">
+                            <div class="invalid-tooltip">
+                                Birth Date is empty!
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="validationTooltip01">Salary</label>
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Rp.</div>
+                                <input type="text" class="form-control" id="editSalary" name="Salary" placeholder="Salary">
+                                <div class="invalid-tooltip">
+                                    Salary is empty!
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="validationTooltip01">Gender</label>
+                            <select id="editGender" class="form-control" name="Gender" required>
+                                <option value="">- Select -</option>
+                                <option value="0"> Male</option>
+                                <option value="1"> Female</option>
+                            </select>
+                            <div class="invalid-tooltip">
+                                Gender is empty!
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="validationTooltip01">Email</label>
+                            <input type="email" class="form-control" id="editEmail" name="Email" placeholder="Email">
+                            <div class="invalid-tooltip">
+                                Email is empty!
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" id="btnEdit" form="EditForm" class="btn btn-primary">Save</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/assets/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/assets/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+
+    <script type="text/javascript" charset="utf-8" src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.print.min.js"></script>
+    <script src="~/assets/js/demo/datatables-demo.js"></script>
+    <script src="~/js/dataTable.js" asp-append-version="true"></script>
+}
